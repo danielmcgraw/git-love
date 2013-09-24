@@ -1,0 +1,54 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__)) + '/../lib/')
+
+require 'git-love'
+require 'fileutils'
+
+def which(cmd)
+	p cmd
+  exts = ENV['PATHEXT'] ? ENV['PATHEXT'].split(';') : ['']
+  ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+    exts.each { |ext|
+      exe = "#{path}/#{cmd}#{ext}"
+      p exe
+      return exe if File.executable? exe
+    }
+  end
+  return nil
+end
+
+def plugins
+	plugins = []
+	ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+		Dir.glob("#{path}/git-love-*").each do |cmd|
+			plugins << cmd.split('/').last.scan(/git-love-([^-]+).*/).flatten.first
+		end
+	end
+	plugins.uniq
+end
+
+arguments = ARGV
+command = arguments.shift
+command = 'help' if command.nil?
+
+if command == 'version' || command == '-v' || command == '--version'
+  GitLove.print_version
+  exit 0
+end
+
+bin = "git-love-#{command}"
+p bin
+
+if which(bin)
+	system "#{bin} #{arguments.join(' ')}"
+
+	plugins.each do |plugin|
+		plugin_bin = "git-love-#{plugin}-#{command}"
+		if which(plugin_bin)
+			system "#{plugin_bin} #{arguments.join(' ')}"
+		end
+	end
+else
+	GitLove.print_help
+end

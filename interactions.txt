@@ -1,0 +1,84 @@
+Interactions
+-------------------------------------------------------
+
+git-love add 'Daniel McGraw' dmcgraw@trip30.com dm
+> Added user 'Daniel McGraw dmcgraw@trip30.com (dm)'
+or
+> Abbreviation 'dm' already taken, please specify another
+
+git-love add 'Daniel McGraw' dmcgraw@trip30.com
+> Added user 'Daniel McGraw dmcgraw@trip30.com (dm)'
+or
+> Abbreviation 'dm' already taken, please specify another
+
+git-love add 
+> To add a user you need to specify a user name, email, and optionally a user abbreviation.
+> e.g. "git-love add 'User Name' user@email.com un"
+
+/ when not given the abbreviation is created from your initials
+
+=======================================================
+
+git-love delete dm
+> Deleted user 'Daniel McGraw dmcgraw@trip30.com (dm)'
+or
+> Could not find user 'dm'
+
+git-love delete
+> To delete a user you need to specify that users abbreviation.
+> e.g. "git-love delete js"
+
+/ Should confirm user from abbreviation before deletion
+
+=======================================================
+
+git-love list
+> Users:
+>    → Daniel McGraw      dmcgraw@trip30.com (dm)
+>      Jacob Champness jchampness@trip30.com (jc)
+or
+> Users:
+>      Daniel McGraw      dmcgraw@trip30.com (dm)
+>      Jacob Champness jchampness@trip30.com (jc)
+or
+> Users:
+>    → Daniel McGraw      dmcgraw@trip30.com (dm)
+>    → Jacob Champness jchampness@trip30.com (jc)
+or
+> No Users
+
+/ '→' denotes active user(s)
+/ Maybe highlight active users as well
+
+=======================================================
+
+git-love show
+> Current User: (dm)
+>      user.name: Daniel McGraw 
+>      user.email: dmcgraw@trip30.com
+or
+> Current User: (no alias)
+>      user.name: Bill Billington
+>      user.email: bill@fakeemail.com
+or
+> No Current User
+
+=======================================================
+
+git-love use dm
+> Now Using: (dm)
+>      user.name: Daniel McGraw 
+>      user.email: dmcgraw@trip30.com
+
+git-love use sm
+> No user with the abbreviation 'sm'. 
+
+git-love use 
+> Please specify the abbreviation for the user you would like to use
+> e.g. git-love use dm
+=======================================================
+
+git-love pair dm jc
+> Now Using Pair: (dm & jc)
+>      user.name: Daniel McGraw & Jacob Champness 
+>      user.email: dmcgraw+jchampness@trip30.com
