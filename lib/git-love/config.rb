@@ -6,9 +6,9 @@ module GitLove
       return name.strip, email.strip
     end
 
-    def self.change_user(user)
-      `git config --global user.name "#{user.name}"`
-      `git config --global user.email "#{user.email}"`
+    def self.change_user(user_or_paired_user)
+      `git config --global user.name "#{user_or_paired_user.name}"`
+      `git config --global user.email "#{user_or_paired_user.email}"`
     end
   end
 end

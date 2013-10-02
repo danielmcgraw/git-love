@@ -1,4 +1,5 @@
 require 'git-love/user'
+require 'git-love/pair'
 require 'git-love/users'
 require 'git-love/config'
 require 'git-love/version'
@@ -51,8 +52,8 @@ module GitLove
       else
         p "Current User: (no abbreviation)"
       end
-      p "user.name: #{user.name}"
-      p "user.email: #{user.email}"
+      p "user.name: #{user ? user.name : name}"
+      p "user.email: #{user ? user.email : email}"
     else
       p "No Current User"
     end
@@ -68,7 +69,23 @@ module GitLove
     end
   end
 
-  def self.pair
+  def self.pair(*abbreviations)
+    if abbreviations == 1
+      self.use(abbreviations[0])
+    elsif abbreviations.length > 1
+      names = []
+      emails = []
+      for abbreviation in abbreviations
+        user = users.get(abbreviation)
+        if user
+          names.push(user.name)
+          emails.push(user.email)
+        else
+          p "No user with the abbreviation '#{abbreviation}'."
+        end
+      end
+      GitConfig.change_user Pair.new(names, emails)
+    end
   end
 
   def self.print_help

@@ -36,6 +36,7 @@ module GitLove
       	  return user
       	end
       end
+      nil
     end
 
     def add(user)
