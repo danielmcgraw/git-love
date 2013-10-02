@@ -11,7 +11,9 @@ module GitLove
     end
 
     def exists?(abbreviation)
+      p abbreviation
       users.each do |user|
+        p user.abbreviation
       	if user.abbreviation == abbreviation
       	  return true
       	end
@@ -25,11 +27,12 @@ module GitLove
       	  return user
       	end
       end
+      nil
     end
 
     def get(abbreviation)
       users.each do |user|
-      	if user.abbreviation == abbreviation
+      	if user.abbreviation. == abbreviation
       	  return user
       	end
       end
@@ -50,6 +53,9 @@ module GitLove
     def save!
       File.open @config_file, 'w' do |file|
         users.each do |user|
+          p user.name
+          p user.email
+          p user.abbreviation
           file.puts "#{user.name}, #{user.email}, #{user.abbreviation}"
         end
       end
@@ -73,7 +79,7 @@ module GitLove
     end
 
     def load_users
-      @config.scan(/^([^,]*),([^,]*),([^,]*)$/) do |name, email, abbreviation|
+      @config.scan(/^([^,]*),\s([^,]*),\s([^,]*)\s*$/) do |name, email, abbreviation|
         @users << User.new(name, email, abbreviation)
       end
     end

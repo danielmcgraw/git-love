@@ -1,7 +1,7 @@
 require 'git-love/user'
 require 'git-love/users'
+require 'git-love/config'
 require 'git-love/version'
-require 'git-love/git-config-user'
 
 GIT_LOVE_FILENAME = 'users'
 GIT_LOVE_DIRECTORY = File.expand_path '~/.git-love'
@@ -42,10 +42,15 @@ module GitLove
   end
 
   def self.show
-    name, email, abbreviation = GitConfig.current_user
-
-    if abbreviation
-      p "Current User: (#{user.abbreviation})"
+    name, email = GitConfig.current_user
+    
+    unless name.nil? && email.nil?
+      user = users.get_by_email(email)
+      if user
+        p "Current User: (#{user.abbreviation})"
+      else
+        p "Current User: (no abbreviation)"
+      end
       p "user.name: #{user.name}"
       p "user.email: #{user.email}"
     else
